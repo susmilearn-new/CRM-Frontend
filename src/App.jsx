@@ -9,6 +9,7 @@ import {
 import Register from './pages/Register.jsx';
 import Login from './pages/Login.jsx';
 import Userdata from './pages/Userdata.jsx';
+import Profile from './pages/Profile.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
 
         <Route element={<ProtectedRoute />}>
           <Route path="/userdata" element={<Userdata />} />
+          <Route path="/profile" element={<Profile />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/register" replace />} />

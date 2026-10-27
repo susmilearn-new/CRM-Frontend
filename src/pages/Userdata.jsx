@@ -204,6 +204,12 @@ function Userdata() {
           >
             Logout
           </button>
+          <button
+            onClick={() => navigate('/profile')}
+            className="rounded-lg bg-indigo-600 px-5 py-2 text-white hover:bg-indigo-700"
+          >
+            My Profile
+          </button>
         </header>
 
         {error && (

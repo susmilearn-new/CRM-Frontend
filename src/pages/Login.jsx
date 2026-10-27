@@ -21,37 +21,48 @@ function Login() {
     });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError('');
+  
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError('');
 
-    const { email, password } = formData;
+  const { email, password } = formData;
 
-    if (!email.trim() || !password) {
-      setError('Please enter your email and password.');
-      return;
-    }
+  if (!email.trim() || !password) {
+    setError('Please enter your email and password.');
+    return;
+  }
 
-    try {
-      setLoading(true);
+  try {
+    setLoading(true);
 
-      await api.post('/auth/login', {
-        email: email.trim(),
-        password,
-      });
+    await api.post('/auth/login', {
+      email: email.trim(),
+      password,
+    });
 
+    // Get the logged-in user's details
+    const userResponse = await api.get('/users/me');
+    const user = userResponse.data.user;
+
+    // Redirect based on role
+    if (user.role === 'admin') {
       navigate('/userdata');
-    } catch (err) {
-      console.error('Login error:', err.response?.data || err.message);
-
-      setError(
-        err.response?.data?.message ||
-        'Login failed. Please check your credentials.'
-      );
-    } finally {
-      setLoading(false);
+    } else {
+      navigate('/profile');
     }
-  };
+  } catch (err) {
+    console.error('Login error:', err.response?.data || err.message);
+
+    setError(
+      err.response?.data?.message ||
+      'Login failed. Please check your credentials.'
+    );
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-slate-100 px-4 py-10">
